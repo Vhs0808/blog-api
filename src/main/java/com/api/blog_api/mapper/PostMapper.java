@@ -2,7 +2,7 @@ package com.api.blog_api.mapper;
 
 import com.api.blog_api.dto.request.PostRequestDto;
 import com.api.blog_api.dto.response.PostResponseDto;
-import com.api.blog_api.entity.PostModel;
+import com.api.blog_api.entity.PostEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -10,19 +10,19 @@ import java.time.LocalDate;
 @Component
 public class PostMapper {
 
-    public PostModel toEntity(PostRequestDto dto){
+    public PostEntity toEntity(PostRequestDto dto){
         if(dto == null){
             return null;
         }
-        return new PostModel(
+        return new PostEntity(
                 dto.autor(),
                 dto.titulo(),
-                LocalDate.now(),
-                dto.texto()
+                dto.texto(),
+                LocalDate.now()
         );
     }
 
-    public PostResponseDto toDto(PostModel entity){
+    public PostResponseDto toDto(PostEntity entity){
         if(entity == null){
             return null;
         }

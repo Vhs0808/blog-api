@@ -1,8 +1,7 @@
 package com.api.blog_api.utils;
 
-import com.api.blog_api.entity.PostModel;
+import com.api.blog_api.entity.PostEntity;
 import com.api.blog_api.repository.PostRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +18,8 @@ public class DataUtils {
     //@PostConstruct
     public void savePosts() {
 
-        List<PostModel> postList = new ArrayList<>();
-        PostModel post1 = new PostModel();
+        List<PostEntity> postList = new ArrayList<>();
+        PostEntity post1 = new PostEntity();
         post1.setAutor("Madona");
         post1.setData(LocalDate.now());
         post1.setTexto("Lorem Ipsum is simply dummy text of the printing and typesetting industry."
@@ -38,7 +37,7 @@ public class DataUtils {
                 + "publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
         post1.setTitulo("Docker");
 
-        PostModel post2 = new PostModel();
+        PostEntity post2 = new PostEntity();
         post2.setAutor("Xuxa");
         post2.setData(LocalDate.now());
         post2.setTexto("Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
@@ -53,8 +52,8 @@ public class DataUtils {
         postList.add(post1);
         postList.add(post2);
 
-        for (PostModel post : postList) {
-            PostModel postSaved = postRepository.save(post);
+        for (PostEntity post : postList) {
+            PostEntity postSaved = postRepository.save(post);
             System.out.println(postSaved.getId());
         }
     }

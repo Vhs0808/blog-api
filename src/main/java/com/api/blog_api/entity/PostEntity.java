@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -12,7 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostModel implements Serializable {
+public class PostEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -32,10 +34,13 @@ public class PostModel implements Serializable {
     @Column(columnDefinition = "text", nullable = false)
     private String texto;
 
-    public PostModel(String texto, String titulo, LocalDate data, String autor) {
-        this.texto = texto;
-        this.titulo = titulo;
-        this.data = data;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ComentarioEntity> comentarios = new ArrayList<>();
+
+    public PostEntity(String autor,String titulo, String texto,  LocalDate data) {
         this.autor = autor;
+        this.titulo = titulo;
+        this.texto = texto;
+        this.data = data;
     }
 }

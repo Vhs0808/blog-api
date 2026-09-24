@@ -2,7 +2,7 @@ package com.api.blog_api.service;
 
 import com.api.blog_api.dto.request.PostRequestDto;
 import com.api.blog_api.dto.response.PostResponseDto;
-import com.api.blog_api.entity.PostModel;
+import com.api.blog_api.entity.PostEntity;
 import com.api.blog_api.mapper.PostMapper;
 import com.api.blog_api.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +24,10 @@ public class PostServiceImpl implements PostService{
     @Override
     @Transactional(readOnly = true)
     public List<PostResponseDto> findAll(){
-        List<PostModel> posts = postRepository.findAll();
+        List<PostEntity> posts = postRepository.findAll();
         List<PostResponseDto> dtos = new ArrayList<>();
 
-        for(PostModel post : posts){
+        for(PostEntity post : posts){
             dtos.add(postMapper.toDto(post));
         }
 
@@ -36,21 +36,21 @@ public class PostServiceImpl implements PostService{
 
     @Transactional(readOnly = true)
     public PostResponseDto findById(UUID id) {
-        Optional<PostModel> optionalPost = postRepository.findById(id);
+        Optional<PostEntity> optionalPost = postRepository.findById(id);
 
         if(optionalPost.isEmpty()){
             throw new RuntimeException("Post não encontrado com o ID: " + id);
         }
 
-        PostModel post = optionalPost.get();
+        PostEntity post = optionalPost.get();
         return postMapper.toDto(post);
     }
 
     @Override
     @Transactional
     public PostResponseDto createPost(PostRequestDto requestDtodto) {
-        PostModel post = postMapper.toEntity(requestDtodto);
-        PostModel saved = postRepository.save(post);
+        PostEntity post = postMapper.toEntity(requestDtodto);
+        PostEntity saved = postRepository.save(post);
         return postMapper.toDto(saved);
     }
 
