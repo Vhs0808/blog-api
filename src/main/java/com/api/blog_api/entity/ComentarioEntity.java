@@ -9,7 +9,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "comentario")
-@RequiredArgsConstructor
 @Getter
 @Setter
 public class ComentarioEntity implements Serializable{
@@ -20,13 +19,19 @@ public class ComentarioEntity implements Serializable{
     private UUID id;
 
     @Column(nullable = false)
-    private final LocalDate data;
+    private LocalDate data;
 
     @Lob
     @Column(nullable = false)
-    private final String comentario;
+    private String comentario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post", nullable = false)
-    private final PostEntity post;
+    private PostEntity post;
+
+    public ComentarioEntity(LocalDate data, String comentario, PostEntity post) {
+        this.data = data;
+        this.comentario = comentario;
+        this.post = post;
+    }
 }

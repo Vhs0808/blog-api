@@ -43,4 +43,9 @@ public class PostEntity implements Serializable {
         this.texto = texto;
         this.data = data;
     }
+
+    public void adicionarComentario(ComentarioEntity comentario){
+        comentarios.add(comentario);
+        comentario.setPost(this);
+    }
 }
