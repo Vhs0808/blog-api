@@ -17,7 +17,6 @@ public class ComentarioMapper {
         }
 
         return new ComentarioEntity(
-                LocalDate.now(),
                 req.comentario(),
                 post
         );

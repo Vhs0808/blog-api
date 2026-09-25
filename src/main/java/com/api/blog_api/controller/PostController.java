@@ -1,6 +1,8 @@
 package com.api.blog_api.controller;
 
+import com.api.blog_api.dto.request.ComentarioRequestDto;
 import com.api.blog_api.dto.request.PostRequestDto;
+import com.api.blog_api.dto.response.ComentarioResponseDto;
 import com.api.blog_api.dto.response.PostResponseDto;
 import com.api.blog_api.service.PostServiceImpl;
 import jakarta.validation.Valid;
@@ -34,12 +36,25 @@ public class PostController {
 
     @PostMapping("/newpost")
     public ResponseEntity<PostResponseDto> createPost(
-            @RequestBody @Valid PostRequestDto request,
+            @RequestBody @Valid PostRequestDto req,
             UriComponentsBuilder uriBuilder
             ){
-        PostResponseDto created = service.createPost(request);
+        PostResponseDto created = service.createPost(req);
         URI uri = uriBuilder.path("/newpost").buildAndExpand(created.id()).toUri();
 
         return ResponseEntity.created(uri).body(created);
+    }
+
+    @PostMapping("/comentarios/{postId}")
+    public ResponseEntity<ComentarioResponseDto> createComentario(
+            @PathVariable UUID postId,
+            @RequestBody @Valid ComentarioRequestDto req,
+            UriComponentsBuilder uriBuilder
+            ){
+        ComentarioResponseDto created = service.createComentario(postId, req);
+        URI uri = uriBuilder.path("//comentarios/{postId}").buildAndExpand(created.id()).toUri();
+
+        return ResponseEntity.created(uri).body(created);
+
     }
 }

@@ -12,5 +12,5 @@ public interface PostService {
     List<PostResponseDto> findAll();
     PostResponseDto findById(UUID id);
     PostResponseDto createPost(PostRequestDto requestDtodto);
-    ComentarioResponseDto addComentario(UUID postId, ComentarioRequestDto dto);
+    ComentarioResponseDto createComentario(UUID postId, ComentarioRequestDto dto);
 }

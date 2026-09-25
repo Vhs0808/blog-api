@@ -11,6 +11,8 @@ import java.util.UUID;
 @Table(name = "comentario")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ComentarioEntity implements Serializable{
     private static final long serialVersionUID = 1L;
 
@@ -29,8 +31,8 @@ public class ComentarioEntity implements Serializable{
     @JoinColumn(name = "post", nullable = false)
     private PostEntity post;
 
-    public ComentarioEntity(LocalDate data, String comentario, PostEntity post) {
-        this.data = data;
+    public ComentarioEntity(String comentario, PostEntity post) {
+        this.data = LocalDate.now();
         this.comentario = comentario;
         this.post = post;
     }
