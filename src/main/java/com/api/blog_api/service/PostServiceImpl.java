@@ -11,12 +11,11 @@ import com.api.blog_api.mapper.PostMapper;
 import com.api.blog_api.repository.ComentarioRepository;
 import com.api.blog_api.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,15 +30,15 @@ public class PostServiceImpl implements PostService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<PostResponseDto> findAll(){
-        List<PostEntity> posts = postRepository.findAll();
-        List<PostResponseDto> dtos = new ArrayList<>();
+    public Page<PostResponseDto> findAll(Pageable pageable){
 
-        for(PostEntity post : posts){
-            dtos.add(postMapper.toDto(post));
-        }
+        Page<PostEntity> posts = postRepository.findAll(pageable);
 
-        return dtos;
+        return posts.map(
+                post -> {
+                    PostResponseDto dto = postMapper.toDto(post);
+                    return dto;
+                });
     }
 
     @Transactional(readOnly = true)

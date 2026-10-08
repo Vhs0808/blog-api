@@ -1,6 +1,6 @@
 -- Migration inicial da Blog API.
 -- UUID do Hibernate 6 é armazenado por padrão como BINARY(16) no MySQL.
-CREATE TABLE tb_post (
+CREATE TABLE post (
     id BINARY(16) NOT NULL,
     autor VARCHAR(70) NOT NULL,
     data DATE NOT NULL,
