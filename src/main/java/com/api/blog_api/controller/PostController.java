@@ -8,7 +8,11 @@ import com.api.blog_api.service.PostServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.RequestPath;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,7 +33,20 @@ public class PostController {
 
     @Operation(summary = "Lista post com paginação")
     @GetMapping("/posts")
-    public ResponseEntity<List<PostResponseDto>> getAllPosts(){return ResponseEntity.ok(service.findAll());}
+    public ResponseEntity<Page<PostResponseDto>> getAllPosts(
+            @RequestParam(defaultValue = "0")int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "data") String sortBy,
+            @RequestParam(defaultValue = "desc") String direction,
+            @RequestParam(name = "titulo", required = false) String titulo
+    )
+    {
+        Sort sort = direction.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        return ResponseEntity.ok(service.findByTitulo(PageRequest.of(page,size,sort), titulo));
+    }
 
     @Operation(summary = "Busca um post pelo ID")
     @GetMapping("/posts/{id}")

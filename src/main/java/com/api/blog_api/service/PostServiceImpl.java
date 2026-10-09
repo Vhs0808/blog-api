@@ -12,10 +12,13 @@ import com.api.blog_api.repository.ComentarioRepository;
 import com.api.blog_api.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,6 +42,19 @@ public class PostServiceImpl implements PostService{
                     PostResponseDto dto = postMapper.toDto(post);
                     return dto;
                 });
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PostResponseDto> findByTitulo(Pageable pageable, String titulo){
+        Page<PostEntity> posts;
+        if (titulo == null || titulo.isBlank()) {
+            posts = postRepository.findAll(pageable);
+        } else {
+            posts = postRepository.findByTituloContainingIgnoreCase(titulo, pageable);
+        }
+
+        return posts.map(postMapper::toDto);
     }
 
     @Transactional(readOnly = true)
