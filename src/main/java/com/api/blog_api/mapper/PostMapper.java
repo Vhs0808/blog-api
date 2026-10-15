@@ -3,6 +3,7 @@ package com.api.blog_api.mapper;
 import com.api.blog_api.dto.request.PostRequestDto;
 import com.api.blog_api.dto.response.ComentarioResponseDto;
 import com.api.blog_api.dto.response.PostResponseDto;
+import com.api.blog_api.dto.response.PostSemComentarioResponseDto;
 import com.api.blog_api.entity.ComentarioEntity;
 import com.api.blog_api.entity.PostEntity;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,20 @@ public class PostMapper {
                 entity.getTitulo(),
                 entity.getTexto(),
                 comentariosDto
+        );
+    }
+
+    public PostSemComentarioResponseDto toDtoWithoutComents(PostEntity entity){
+        if(entity == null){
+            return null;
+        }
+
+        return new PostSemComentarioResponseDto(
+                entity.getId(),
+                entity.getAutor(),
+                entity.getData(),
+                entity.getTitulo(),
+                entity.getTexto()
         );
     }
 }
