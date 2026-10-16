@@ -24,7 +24,7 @@ public class ComentarioEntity implements Serializable{
     private LocalDate data;
 
     @Lob
-    @Column(nullable = false)
+    @Column(columnDefinition = "longtext", nullable = false)
     private String comentario;
 
     @ManyToOne(fetch = FetchType.LAZY)
