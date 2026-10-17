@@ -26,8 +26,7 @@ public class PostMapper {
         return new PostEntity(
                 dto.autor(),
                 dto.titulo(),
-                dto.texto(),
-                LocalDate.now()
+                dto.texto()
         );
     }
 

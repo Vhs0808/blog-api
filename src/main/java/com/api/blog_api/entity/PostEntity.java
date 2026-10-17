@@ -37,11 +37,11 @@ public class PostEntity implements Serializable {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ComentarioEntity> comentarios = new ArrayList<>();
 
-    public PostEntity(String autor,String titulo, String texto,  LocalDate data) {
+    public PostEntity(String autor,String titulo, String texto) {
         this.autor = autor;
         this.titulo = titulo;
         this.texto = texto;
-        this.data = data;
+        this.data = LocalDate.now();
     }
 
     public void adicionarComentario(ComentarioEntity comentario){
